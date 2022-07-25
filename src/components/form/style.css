@@ -1,0 +1,39 @@
+.main-form {
+  background-color: #eee;
+  border-radius: 12px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px;
+  width: 1200px;
+}
+
+.form-gorup {
+  display: flex;
+  align-items: center;
+}
+.form-label {
+  font-size: 16px;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.form-input {
+  height: 40px;
+  width: 240px;
+  border: none;
+  border-radius: 12px;
+  padding: 0 12px;
+  margin-right: 15px;
+}
+
+.form-btn {
+  border: none;
+  height: 40px;
+  border-radius: 10px;
+  background-color: teal;
+  width: 140px;
+  color: #fff;
+  font-weight: 700;
+}
