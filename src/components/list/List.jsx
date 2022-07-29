@@ -1,68 +1,78 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React from "react";
 import "./style.css";
-import Todo from "../todo/Todo";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteToDo, isDone } from "../../redux/modules/todos";
+import { Link } from "react-router-dom";
 
-const List = ({ todos, setTodos }) => {
-  const doneClick = (todoId) => {
-    const newTodos = todos.map((todo) => {
-      if (todo.id === todoId) {
-        return {
-          ...todo,
-          done: !todo.done,
-        };
-      } else {
-        return { ...todo };
-      }
-    });
-    setTodos(newTodos);
+const List = () => {
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state);
+
+  const onDelteBtn = (id) => {
+    dispatch(deleteToDo(id));
   };
-  const deleteClick = (todoId) => {
-    const newTodos = todos.filter((todo) => {
-      return todo.id !== todoId;
-    });
-    setTodos(newTodos);
+  const toggleDone = (id) => {
+    dispatch(isDone(id));
   };
-
-  useEffect(() => {
-    todos.map((todo, i) => {
-      todo.id = i + 1;
-    });
-  }, [setTodos]);
-
   return (
     <>
       <div>
         <h2>Working..🔥</h2>
         <div>
-          {todos.map((todo, i) => {
-            return !todo.done
-              ? [
-                  <Todo
-                    deleteClick={deleteClick}
-                    doneClick={doneClick}
-                    todo={todo}
-                    key={todo.id}
-                    setTodos={setTodos}
-                  />,
-                ]
-              : null;
+          {todos.map((todo) => {
+            if (todo.done === false)
+              return (
+                <div key={todo.id}>
+                  <Link to={`/detail/${todo.id}`} key={todo.id}>
+                    상세보기
+                  </Link>
+                  <h1>{todo.title}</h1>
+                  <h5>{todo.contents}</h5>
+                  <button
+                    onClick={() => {
+                      onDelteBtn(todo.id);
+                    }}
+                  >
+                    삭제하기!
+                  </button>
+                  <button
+                    onClick={() => {
+                      toggleDone(todo.id);
+                    }}
+                  >
+                    {todo.done ? "취소" : "완료"}
+                  </button>
+                </div>
+              );
           })}
         </div>
         <h2>Done..!🎉</h2>
         <div>
-          {todos.map((todo, i) => {
-            return !todo.done
-              ? null
-              : [
-                  <Todo
-                    deleteClick={deleteClick}
-                    doneClick={doneClick}
-                    todo={todo}
-                    key={todo.id}
-                    setTodos={setTodos}
-                  />,
-                ];
+          {todos.map((todo) => {
+            if (todo.done !== false)
+              return (
+                <div key={todo.id}>
+                  <Link to={`/detail/${todo.id}`} key={todo.id}>
+                    상세보기
+                  </Link>
+                  <h1>{todo.title}</h1>
+                  <h5>{todo.contents}</h5>
+                  <button
+                    onClick={() => {
+                      onDelteBtn(todo.id);
+                    }}
+                  >
+                    삭제하기!
+                  </button>
+                  <button
+                    onClick={() => {
+                      toggleDone(todo.id);
+                    }}
+                  >
+                    {todo.done ? "취소" : "완료"}
+                  </button>
+                </div>
+              );
           })}
         </div>
       </div>

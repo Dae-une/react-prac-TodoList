@@ -1,28 +1,27 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToDo } from "../../redux/modules/todos";
 import "./style.css";
 
-const Form = ({ todos, setTodos }) => {
+const Form = () => {
+  const dispatch = useDispatch();
+  const todos = useSelector((state) => state);
   const initalState = {
-    id: "",
     title: "",
     contents: "",
     done: false,
   };
   const [todo, setTodo] = useState(initalState);
 
-  const nextId = useRef(2);
-  const onChange = useCallback(
-    (e) => {
-      const { name, value } = e.target;
-      setTodo({ ...todo, [name]: value, id: nextId.current });
-      nextId.current++;
-    },
-    [todos]
-  );
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setTodo({ ...todo, [name]: value });
+  };
 
   const onsubmit = (e) => {
     e.preventDefault();
-    setTodos([...todos, todo]);
+    const id = Date.now();
+    dispatch(addToDo({ ...todo, id }));
     setTodo(initalState);
   };
 
