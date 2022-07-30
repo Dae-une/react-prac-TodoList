@@ -1,11 +1,10 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToDo } from "../../redux/modules/todos";
-import "./style.css";
+import { MainForm, InputBox, FormButton } from "./style";
 
 const Form = () => {
   const dispatch = useDispatch();
-  const todos = useSelector((state) => state);
   const initalState = {
     title: "",
     contents: "",
@@ -27,27 +26,27 @@ const Form = () => {
 
   return (
     <>
-      <form onSubmit={onsubmit} className="main-form">
-        <div className="form-group">
-          <label className="form-label">제목</label>
+      <MainForm onSubmit={onsubmit}>
+        <InputBox>
+          <label>제목</label>
           <input
             onChange={onChange}
-            className="form-input"
             type="text"
             name="title"
             value={todo.title}
+            required
           />
-          <label className="form-label">내용</label>
+          <label>내용</label>
           <input
             onChange={onChange}
-            className="form-input"
             type="text"
             name="contents"
             value={todo.contents}
+            required
           />
-        </div>
-        <button className="form-btn">추가하기</button>
-      </form>
+        </InputBox>
+        <FormButton>추가하기</FormButton>
+      </MainForm>
     </>
   );
 };

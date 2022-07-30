@@ -3,6 +3,11 @@ const DELETE_TODO = "DELETE_TODO";
 const IS_DONE = "IS_DONE";
 const GET_ID = "GET_ID";
 
+const initialState = {
+  todos: [],
+  todo: {},
+};
+
 export const addToDo = (payload) => {
   return {
     type: ADD_TODO,
@@ -29,35 +34,39 @@ export const getId = (payload) => {
     payload,
   };
 };
-const rootReducer = (state = [], action) => {
+const rootReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_TODO:
-      return [
+      return {
         ...state,
-        {
-          title: action.payload.title,
-          contents: action.payload.contents,
-          id: action.payload.id,
-          done: false,
-        },
-      ];
+        todos: [...state.todos, action.payload],
+      };
 
     case DELETE_TODO:
-      return state.filter((todo) => todo.id !== action.payload);
+      return {
+        ...state,
+        todos: state.todos.filter((todo) => todo.id !== action.payload),
+      };
 
     case IS_DONE:
-      return state.map((todo) => {
-        if (todo.id === action.payload) {
-          return {
-            ...todo,
-            done: !todo.done,
-          };
-        } else {
-          return todo;
-        }
-      });
+      return {
+        ...state,
+        todos: state.todos.map((todo) => {
+          if (todo.id === action.payload) {
+            return {
+              ...todo,
+              done: !todo.done,
+            };
+          } else {
+            return todo;
+          }
+        }),
+      };
     case GET_ID:
-      return state.find((todo) => todo.id === action.payload);
+      return {
+        ...state,
+        todo: state.todos.find((todo) => todo.id === parseInt(action.payload)),
+      };
     default:
       return state;
   }

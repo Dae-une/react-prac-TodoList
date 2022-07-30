@@ -1,13 +1,13 @@
 import React from "react";
-import "./style.css";
+import { HeaderBox } from "./style";
 
 const Header = () => {
   return (
     <>
-      <div className="Header">
+      <HeaderBox>
         <div>My Todo List</div>
         <div>React Prac</div>
-      </div>
+      </HeaderBox>
     </>
   );
 };
