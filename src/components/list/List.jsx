@@ -9,6 +9,7 @@ import {
   TodoBtn,
   CardFooter,
 } from "./style";
+import Progress from "./Progress";
 const List = () => {
   const dispatch = useDispatch();
   const todos = useSelector((state) => state.todos);
@@ -22,6 +23,7 @@ const List = () => {
   };
   return (
     <>
+      <Progress />
       <TodoListBox>
         <h2>Working..🔥</h2>
         <TodoCardBox>
@@ -33,7 +35,11 @@ const List = () => {
                     상세보기
                   </ToDetail>
                   <h1>{todo.title}</h1>
-                  <h4>{todo.contents.slice(0, 21)}...</h4>
+                  <h4>
+                    {todo.contents.length > 20
+                      ? todo.contents.slice(0, 21) + "..."
+                      : todo.contents}
+                  </h4>
                   <CardFooter>
                     <TodoBtn
                       borderColor={"red"}
@@ -69,7 +75,11 @@ const List = () => {
                     상세보기
                   </ToDetail>
                   <h1>{todo.title}</h1>
-                  <h4>{todo.contents.slice(0, 21)}...</h4>
+                  <h4>
+                    {todo.contents.length > 20
+                      ? todo.contents.slice(0, 21) + "..."
+                      : todo.contents}
+                  </h4>
                   <CardFooter>
                     <TodoBtn
                       borderColor={"red"}
